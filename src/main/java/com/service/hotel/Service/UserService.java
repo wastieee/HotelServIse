@@ -9,8 +9,10 @@ import com.service.hotel.Entity.User;
 import com.service.hotel.Exceptions.NotFoundException;
 import com.service.hotel.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -34,7 +36,10 @@ public class UserService {
         return userRepository.findAll().stream().map(user2DTOConverter::convert).toList();
     }
     @Transactional
-    public UserDTO create(final UserRequestDTO request) {
+    public UserDTO create(final UserRequestDTO request) throws BadRequestException {
+        if (userRepository.existsByLogin(request.getLogin())) {
+            throw new BadRequestException("User already exists");
+        }
         User user = fillOrUpdateUserEntity(request, new User());
         return user2DTOConverter.convert(userRepository.save(user));
     }

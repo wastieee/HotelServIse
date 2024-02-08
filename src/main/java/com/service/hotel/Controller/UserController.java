@@ -7,6 +7,7 @@ import com.service.hotel.DTO.UserDTO;
 import com.service.hotel.DTO.UserRequestDTO;
 import com.service.hotel.Service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createHotel(@RequestBody UserRequestDTO request) {
+    public ResponseEntity<UserDTO> createHotel(@RequestBody UserRequestDTO request) throws BadRequestException {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(request));
     }
 

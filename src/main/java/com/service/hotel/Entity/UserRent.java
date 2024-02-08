@@ -1,11 +1,12 @@
 package com.service.hotel.Entity;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "user_rent")
@@ -13,13 +14,12 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 public class UserRent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -28,10 +28,10 @@ public class UserRent {
     private Room room;
 
     @Column(name = "start_rent_date", nullable = false)
-    private LocalDateTime startRentDate;
+    private LocalDate startRentDate;
 
     @Column(name = "end_rent_date", nullable = false)
-    private LocalDateTime endRentDate;
+    private LocalDate endRentDate;
 
 
 }
